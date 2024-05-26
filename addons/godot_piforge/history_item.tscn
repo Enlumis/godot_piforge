@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://b4q0log0cc5nv"]
 
-[ext_resource type="Texture2D" uid="uid://dxnololcxu10s" path="res://addons/godot_piforge/piforge_icon.svg" id="1_cj38l"]
+[ext_resource type="Texture2D" path="res://addons/godot_piforge/piforge_icon.svg" id="1_cj38l"]
 [ext_resource type="Script" path="res://addons/godot_piforge/history_item.gd" id="1_rsm1u"]
-[ext_resource type="Texture2D" uid="uid://33x53x6c0e7g" path="res://addons/godot_piforge/spinner.svg" id="3_h7lwd"]
+[ext_resource type="Texture2D" path="res://addons/godot_piforge/spinner.svg" id="3_h7lwd"]
 
 [node name="HistoryItem" type="Button"]
 custom_minimum_size = Vector2(160, 160)
