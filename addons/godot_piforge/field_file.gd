@@ -189,7 +189,7 @@ func _on_field_focus_exited():
 
 
 func _on_texture_rect_gui_input(event):
-	if event is InputEventMouseButton and event.pressed == false:
+	if event is InputEventMouseButton and event.pressed == false and event.button_index == 1:
 		_on_OpenButton_pressed()
-	if event is InputEventScreenTouch and event.pressed == false:
+	if event is InputEventScreenTouch and event.pressed == false and event.button_index == 1:
 		_on_OpenButton_pressed()

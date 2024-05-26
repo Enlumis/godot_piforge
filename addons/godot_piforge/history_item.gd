@@ -3,7 +3,6 @@ class_name PiForgeHistoryItem
 extends Button
 
 var data = null
-var panel: PiForgePanel
 
 @onready var texture_rect:TextureRect = $TextureRect2
 @onready var spinner:Control = $Spinner
@@ -14,10 +13,6 @@ func _ready():
 	spinner.create_tween().tween_property(spinner.get_child(0),"rotation_degrees", 1000000, 1000).from(0)	
 
 
-func set_panel_ref(p):
-	panel = p
-
-
 func setData(item:Dictionary):
 	data = item
 	if data.has("data"):
@@ -25,9 +20,6 @@ func setData(item:Dictionary):
 		if outdata.has("img_url"):
 			download_image(outdata["img_url"])
 
-
-func _on_pressed():
-	panel.set_result(data)
 
 
 func download_image(url):

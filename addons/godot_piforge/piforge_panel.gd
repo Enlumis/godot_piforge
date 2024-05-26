@@ -218,13 +218,18 @@ func on_open_panel():
 
 func add_item_to_history(item = null, append_at_end = false):
 	var instan:PiForgeHistoryItem = history_item.instantiate()
-	instan.set_panel_ref(self)
 	history_container.add_child(instan)
 	if !append_at_end:
 		instan.get_parent().move_child(instan, 0)
 	if item != null:
 		instan.setData(item)
+		add_item_history_action(instan)
 	return instan
+
+
+func add_item_history_action(history_item):
+	history_item.connect("pressed", func():
+		set_result(history_item.data))
 
 
 func load_history():
@@ -335,7 +340,7 @@ func _on_tab_container_tab_changed(tab):
 
 func _on_pi_forge_gui_input(event):
 	if event is InputEventMouseButton:
-		if event.pressed:
+		if event.pressed and event.button_index == 1:
 			OS.shell_open("https://piforge.ai/")
 			
 
@@ -399,6 +404,7 @@ func _on_button_generate_pressed():
 				create_history["data"] = get_json_data(JSON.stringify(data))
 				create_history["data"]["img_url"] = data["img_urls"][i]
 				h.setData(create_history)
+				add_item_history_action(h)
 			download_image(data["img_urls"][0])
 		else:
 			generate_status.text = JSON.stringify(data)
