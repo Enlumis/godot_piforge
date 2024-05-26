@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://b46wiif52wocb"]
 
-[ext_resource type="Script" path="res://addons/godot_piforge/addons/piforge_ai/field_file.gd" id="1_e088i"]
-[ext_resource type="Texture2D" uid="uid://dxnololcxu10s" path="res://addons/godot_piforge/addons/piforge_ai/piforge_icon.svg" id="2_rpsaq"]
+[ext_resource type="Script" path="res://addons/godot_piforge/field_file.gd" id="1_e088i"]
+[ext_resource type="Texture2D" uid="uid://dxnololcxu10s" path="res://addons/godot_piforge/piforge_icon.svg" id="2_rpsaq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tr837"]
 

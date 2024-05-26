@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://biqo2bcnxfcmg"]
 
-[ext_resource type="Script" path="res://addons/godot_piforge/addons/piforge_ai/piforge_panel.gd" id="1_3j6k1"]
-[ext_resource type="Texture2D" path="res://addons/godot_piforge/addons/piforge_ai/spinner.svg" id="2_mu75f"]
-[ext_resource type="Texture2D" uid="uid://dxnololcxu10s" path="res://addons/godot_piforge/addons/piforge_ai/piforge_icon.svg" id="3_dkor6"]
-[ext_resource type="PackedScene" uid="uid://b46wiif52wocb" path="res://addons/godot_piforge/addons/piforge_ai/field_file.tscn" id="4_m46pg"]
-[ext_resource type="Texture2D" uid="uid://do14k82q8tfvc" path="res://addons/godot_piforge/addons/piforge_ai/icon.svg" id="5_3aks0"]
+[ext_resource type="Script" path="res://addons/godot_piforge/piforge_panel.gd" id="1_3j6k1"]
+[ext_resource type="Texture2D" uid="uid://33x53x6c0e7g" path="res://addons/godot_piforge/spinner.svg" id="2_mu75f"]
+[ext_resource type="Texture2D" uid="uid://dxnololcxu10s" path="res://addons/godot_piforge/piforge_icon.svg" id="3_dkor6"]
+[ext_resource type="PackedScene" uid="uid://b46wiif52wocb" path="res://addons/godot_piforge/field_file.tscn" id="4_m46pg"]
+[ext_resource type="Texture2D" uid="uid://do14k82q8tfvc" path="res://addons/godot_piforge/icon.svg" id="5_3aks0"]
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_p0wvl"]
 width = 2
@@ -275,7 +275,7 @@ text = "GENERATE"
 [node name="Credits" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "7549.99999999998 Credits"
+text = "0 Credits"
 
 [node name="Settings" type="VBoxContainer" parent="TabContainer"]
 visible = false
@@ -303,7 +303,6 @@ layout_mode = 2
 [node name="LineEdit" type="LineEdit" parent="TabContainer/Settings/HBoxContainer"]
 custom_minimum_size = Vector2(400, 2.08165e-12)
 layout_mode = 2
-text = "******"
 placeholder_text = "Enter API KEY"
 
 [node name="ButtonCheckKey" type="Button" parent="TabContainer/Settings/HBoxContainer"]
@@ -316,7 +315,6 @@ theme_override_colors/font_color = Color(0, 1, 0, 1)
 text = "Your API KEY is ready"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Settings"]
-visible = false
 layout_mode = 2
 
 [node name="ButtonGetKey" type="Button" parent="TabContainer/Settings/HBoxContainer3"]
@@ -324,9 +322,10 @@ layout_mode = 2
 text = "GET API KEY"
 
 [node name="Credits" type="Label" parent="TabContainer/Settings"]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "7549.99999999998 Credits"
+text = "0 Credits"
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="TabContainer/Settings"]
 layout_mode = 2
@@ -384,7 +383,6 @@ text = "https://piforge.ai"
 uri = "https://piforge.ai"
 
 [connection signal="tab_changed" from="TabContainer" to="." method="_on_tab_container_tab_changed"]
-[connection signal="pressed" from="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer/FlowContainer/HFlowContainer/HistoryItem" to="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer/FlowContainer/HFlowContainer/HistoryItem" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer/FlowContainer/Button" to="." method="_on_button_load_more_history_pressed"]
 [connection signal="pressed" from="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/ActionButtons/Bottom/ButtonInputImg" to="." method="_on_button_input_copy_img_pressed"]
 [connection signal="gui_input" from="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer/PiForge" to="." method="_on_pi_forge_gui_input"]

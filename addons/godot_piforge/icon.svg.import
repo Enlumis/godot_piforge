@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxnololcxu10s"
-path="res://.godot/imported/piforge_icon.svg-e5443ea25075701a2800dafa70066ebe.ctex"
+uid="uid://do14k82q8tfvc"
+path="res://.godot/imported/icon.svg-96f126462cdf1ddd0a72d739a1e2ff3c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot_piforge/addons/piforge_ai/piforge_icon.svg"
-dest_files=["res://.godot/imported/piforge_icon.svg-e5443ea25075701a2800dafa70066ebe.ctex"]
+source_file="res://addons/godot_piforge/icon.svg"
+dest_files=["res://.godot/imported/icon.svg-96f126462cdf1ddd0a72d739a1e2ff3c.ctex"]
 
 [params]
 

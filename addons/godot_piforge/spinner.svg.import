@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://33x53x6c0e7g"
-path="res://.godot/imported/spinner.svg-412a09b0c53ee8fa3c49377cefccae2a.ctex"
+path="res://.godot/imported/spinner.svg-93bbfc846db7d18142d639f8cc1a8cef.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot_piforge/addons/piforge_ai/spinner.svg"
-dest_files=["res://.godot/imported/spinner.svg-412a09b0c53ee8fa3c49377cefccae2a.ctex"]
+source_file="res://addons/godot_piforge/spinner.svg"
+dest_files=["res://.godot/imported/spinner.svg-93bbfc846db7d18142d639f8cc1a8cef.ctex"]
 
 [params]
 
