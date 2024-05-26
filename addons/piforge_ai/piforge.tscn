@@ -1,0 +1,372 @@
+[gd_scene load_steps=8 format=3 uid="uid://biqo2bcnxfcmg"]
+
+[ext_resource type="Script" path="res://addons/godot_piforge/addons/piforge_ai/piforge_panel.gd" id="1_3j6k1"]
+[ext_resource type="Texture2D" uid="uid://33x53x6c0e7g" path="res://addons/godot_piforge/addons/piforge_ai/spinner.svg" id="2_mu75f"]
+[ext_resource type="Texture2D" uid="uid://dxnololcxu10s" path="res://addons/godot_piforge/addons/piforge_ai/piforge_icon.svg" id="3_dkor6"]
+[ext_resource type="PackedScene" uid="uid://b46wiif52wocb" path="res://addons/godot_piforge/addons/piforge_ai/field_file.tscn" id="4_m46pg"]
+[ext_resource type="Texture2D" uid="uid://do14k82q8tfvc" path="res://addons/godot_piforge/addons/piforge_ai/icon.svg" id="5_3aks0"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p0wvl"]
+width = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mfkj"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0.272554, 0.033747, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="PiForge" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_3j6k1")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Generate" type="HBoxContainer" parent="TabContainer"]
+layout_mode = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="TabContainer/Generate"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BoxContainer" type="BoxContainer" parent="TabContainer/Generate/HSplitContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Generate/HSplitContainer/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "History:"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(360, 2.08165e-12)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FlowContainer" type="VBoxContainer" parent="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HFlowContainer" type="HFlowContainer" parent="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer/FlowContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer/FlowContainer"]
+layout_mode = 2
+text = "Load more"
+
+[node name="TextureRect2" type="TextureRect" parent="TabContainer/Generate/HSplitContainer/BoxContainer"]
+custom_minimum_size = Vector2(2, 2.08165e-12)
+layout_mode = 2
+texture = SubResource("GradientTexture1D_p0wvl")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="TabContainer/Generate/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="GraphEdit" parent="TabContainer/Generate/HSplitContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+zoom_min = 0.5
+zoom_max = 4.0
+minimap_enabled = false
+show_zoom_label = true
+show_grid_buttons = false
+show_minimap_button = false
+show_arrange_button = false
+
+[node name="GraphNode" type="GraphNode" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 135.0
+offset_right = 557.0
+offset_bottom = 835.0
+mouse_filter = 1
+position_offset = Vector2(45, 135)
+resizable = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spinner" type="Control" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spinner" type="TextureRect" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/Spinner"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -36.0
+offset_right = 33.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(35, 35)
+texture = ExtResource("2_mu75f")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("3_dkor6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ActionButtons" type="VBoxContainer" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer"]
+layout_mode = 2
+
+[node name="TopButtons" type="HBoxContainer" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/ActionButtons"]
+layout_mode = 2
+alignment = 1
+
+[node name="ButtonSave" type="Button" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/ActionButtons/TopButtons"]
+layout_mode = 2
+text = "Save to project OUTPUT PATH"
+
+[node name="Bottom" type="HBoxContainer" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/ActionButtons"]
+layout_mode = 2
+alignment = 1
+
+[node name="ButtonCopyParams" type="Button" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/ActionButtons/Bottom"]
+layout_mode = 2
+text = "Use parameters"
+
+[node name="ButtonInputImg" type="Button" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/ActionButtons/Bottom"]
+layout_mode = 2
+text = "Use as input image"
+
+[node name="BoxContainer2" type="BoxContainer" parent="TabContainer/Generate/HSplitContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2"]
+custom_minimum_size = Vector2(2, 2.08165e-12)
+layout_mode = 2
+texture = SubResource("GradientTexture1D_p0wvl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PiForge" type="TextureRect" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 60)
+layout_mode = 2
+texture = ExtResource("3_dkor6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Parameters:"
+
+[node name="TextEdit" type="TextEdit" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+text = "one cute purple little monster"
+placeholder_text = "Enter prompt here"
+
+[node name="LabelDenoise3" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Input Image:"
+
+[node name="Field_File" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer" instance=ExtResource("4_m46pg")]
+layout_mode = 2
+
+[node name="LabelDenoise2" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Image Count:"
+
+[node name="SpinBox" type="SpinBox" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+value = 2.0
+
+[node name="LabelDenoise" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Denoise:"
+
+[node name="HSlider" type="HSlider" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.8
+tick_count = 10
+ticks_on_borders = true
+
+[node name="LabelCfg" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "CFG:"
+
+[node name="HSliderCfg" type="HSlider" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.01
+value = 8.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="GenerateStatus" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+
+[node name="Spinner" type="Control" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(2.08165e-12, 100)
+layout_mode = 2
+
+[node name="Spinner" type="TextureRect" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer/Spinner"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -36.0
+offset_right = 33.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(35, 35)
+texture = ExtResource("2_mu75f")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_3mfkj")
+text = "GENERATE"
+
+[node name="Credits" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Credits: 0"
+
+[node name="Settings" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="TabContainer/Settings"]
+custom_minimum_size = Vector2(2.08165e-12, 20)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Settings"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Settings/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("5_3aks0")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TabContainer/Settings/HBoxContainer2"]
+layout_mode = 2
+text = "Setup your Piforge API KEY "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Settings"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="TabContainer/Settings/HBoxContainer"]
+custom_minimum_size = Vector2(400, 2.08165e-12)
+layout_mode = 2
+placeholder_text = "Enter API KEY"
+
+[node name="ButtonCheckKey" type="Button" parent="TabContainer/Settings/HBoxContainer"]
+layout_mode = 2
+text = "Check API KEY"
+
+[node name="LabelStatus" type="Label" parent="TabContainer/Settings/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Settings"]
+layout_mode = 2
+
+[node name="ButtonGetKey" type="Button" parent="TabContainer/Settings/HBoxContainer3"]
+layout_mode = 2
+text = "GET API KEY"
+
+[node name="Credits" type="Label" parent="TabContainer/Settings"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Credits: 0"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="TabContainer/Settings"]
+layout_mode = 2
+
+[node name="ButtonStartGenerate" type="Button" parent="TabContainer/Settings/HBoxContainer4"]
+layout_mode = 2
+text = "START GENERATE"
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Settings"]
+custom_minimum_size = Vector2(2.08165e-12, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Settings"]
+layout_mode = 2
+text = "OUTPUT PATH"
+
+[node name="Label2" type="Label" parent="TabContainer/Settings"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.57098, 0.57098, 0.57098, 1)
+text = "where images will be stored when exporting them"
+
+[node name="LineEdit" type="LineEdit" parent="TabContainer/Settings"]
+layout_mode = 2
+text = "res://"
+
+[node name="HSeparator3" type="HSeparator" parent="TabContainer/Settings"]
+custom_minimum_size = Vector2(2.08165e-12, 20)
+layout_mode = 2
+
+[node name="LinkButton" type="LinkButton" parent="TabContainer/Settings"]
+layout_mode = 2
+text = "https://piforge.ai"
+uri = "https://piforge.ai"
+
+[connection signal="tab_changed" from="TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="pressed" from="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer/FlowContainer/Button" to="." method="_on_button_load_more_history_pressed"]
+[connection signal="pressed" from="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/ActionButtons/Bottom/ButtonInputImg" to="." method="_on_button_input_copy_img_pressed"]
+[connection signal="gui_input" from="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer/PiForge" to="." method="_on_pi_forge_gui_input"]
+[connection signal="value_changed" from="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer/Field_File" to="." method="_on_field_file_value_changed"]
+[connection signal="pressed" from="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer/Button" to="." method="_on_button_generate_pressed"]
+[connection signal="text_changed" from="TabContainer/Settings/HBoxContainer/LineEdit" to="." method="_on_api_key_changed"]
+[connection signal="pressed" from="TabContainer/Settings/HBoxContainer/ButtonCheckKey" to="." method="_on_button_check_key_pressed"]
+[connection signal="pressed" from="TabContainer/Settings/HBoxContainer3/ButtonGetKey" to="." method="on_pressed_get_key"]
+[connection signal="pressed" from="TabContainer/Settings/HBoxContainer4/ButtonStartGenerate" to="." method="_on_tab_container_tab_changed" binds= [0]]
+[connection signal="text_changed" from="TabContainer/Settings/LineEdit" to="." method="_on_output_path_changed"]

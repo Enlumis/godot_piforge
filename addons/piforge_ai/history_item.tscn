@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4q0log0cc5nv"]
+
+[ext_resource type="Texture2D" uid="uid://dxnololcxu10s" path="res://addons/godot_piforge/addons/piforge_ai/piforge_icon.svg" id="1_cj38l"]
+[ext_resource type="Script" path="res://addons/godot_piforge/addons/piforge_ai/history_item.gd" id="1_rsm1u"]
+[ext_resource type="Texture2D" uid="uid://33x53x6c0e7g" path="res://addons/godot_piforge/addons/piforge_ai/spinner.svg" id="3_h7lwd"]
+
+[node name="HistoryItem" type="Button"]
+custom_minimum_size = Vector2(160, 160)
+script = ExtResource("1_rsm1u")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_cj38l")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Spinner" type="Control" parent="."]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Spinner" type="TextureRect" parent="Spinner"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -36.0
+offset_right = 33.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(35, 35)
+mouse_filter = 2
+texture = ExtResource("3_h7lwd")
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
