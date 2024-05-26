@@ -5,6 +5,7 @@ extends Control
 const OPTIONS = {
 	API_KEY = 'piforge_ai/api_key',
 	OUTPUT_PATH = 'piforge_ai/output_path',
+	EXPORT_TYPE = 'piforge_ai/export_type',
 }
 
 var input_image_data:String = ""
@@ -49,6 +50,8 @@ var history: Array[Dictionary] = [
 
 @onready var history_container:HFlowContainer = $TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer/FlowContainer/HFlowContainer
 
+@onready var export_type_options:OptionButton = $TabContainer/Settings/HBoxContainer5/OptionButton
+
 @onready var history_item = preload("history_item.tscn")
 
 
@@ -64,6 +67,13 @@ func _enter_tree():
 		OPTIONS.OUTPUT_PATH, 
 		"res://", 
 		TYPE_STRING, 
+		PROPERTY_HINT_DIR,
+		""
+	)
+	add_custom_project_setting(
+		OPTIONS.EXPORT_TYPE, 
+		0, 
+		TYPE_INT, 
 		PROPERTY_HINT_DIR,
 		""
 	)
@@ -85,6 +95,7 @@ func on_open_panel():
 	if empty_image:
 		actions_buttons.visible = false
 	save_button.icon = EditorInterface.get_editor_theme().get_icon("Save", 'EditorIcons')
+	export_type_options.selected = get_export_type()
 	_on_button_check_key_pressed()
 
 
@@ -114,16 +125,28 @@ func _on_button_load_more_history_pressed():
 
 
 func on_save_current():
-	var my_resource: Texture2D = canvas_subject_item.texture
-	var path:String = "%s/%s" % [get_output_path(), current_filename]
+	var my_resource: Image = canvas_subject_item.texture.get_image()
+	var path:String = "%s%s" % [get_output_path(), current_filename]
 	var only_filename = path.split("?")[0]
-	var result = ResourceSaver.save(my_resource, only_filename)
-	if result == OK:
-		print("[PiForge AI] Ressouce Saved at %s"%only_filename)
-		EditorInterface.get_resource_filesystem().reimport_files([only_filename])
+	var export_type = get_export_type()
+	var error:Error
+	match export_type:
+		0:
+			only_filename = only_filename.replace(".png", ".jpg")
+			error = my_resource.save_jpg(only_filename)
+		1:
+			error = my_resource.save_png(only_filename)
+		2:
+			only_filename = only_filename.replace(".png", ".webp")
+			error = my_resource.save_webp(only_filename)
+		_:
+			error = my_resource.save_png(only_filename)
+	if error == OK:
+		print("[PiForge AI] Ressouce Saved at %s" % only_filename)
+		EditorInterface.get_resource_filesystem().scan()
 	else:
-		print("[PiForge AI] Failed to save error: %s"%result)
-
+		print("[PiForge AI] Failed to save resouce error:%s" % error)
+	pass
 
 func on_pressed_get_key():
 	OS.shell_open("https://piforge.ai/user/account?autogenerateapikey=true")
@@ -164,10 +187,13 @@ func _on_button_check_key_pressed():
 
 
 func _on_tab_container_tab_changed(tab):
+	if !tab_container:
+		return
 	currentTab = tab
 	if get_api_key() == "" or is_auth_ready == false:
 		currentTab = 1
 		tab_container.current_tab = 1
+		show_get_api_key_button.visible = true
 	else:
 		tab_container.current_tab = tab
 	if (tab == 1):
@@ -320,14 +346,10 @@ func http_heq(route, callback, data: String = "", method:HTTPClient.Method = HTT
 	http_request.request_completed.connect(_request_completed.bind(http_request))
 
 	http_request.set_meta("callback", callback)
-	print("call ", "https://piforge.ai/api/v1/%s" % route)
-	#print("payload ", data)
 	http_request.request("https://piforge.ai/api/v1/%s" % route, _headers, method, data)
 
 
 func _request_completed(result : int, response_code : int, headers : PackedStringArray, body : PackedByteArray, request : HTTPRequest) -> void:
-	var bodutf = body.get_string_from_utf8()
-	print("response: [",response_code, "]  ",bodutf)
 	request.get_meta("callback").call(result, response_code, headers, body, request)
 	pass
 
@@ -353,8 +375,17 @@ func set_output_path(key:String):
 	ProjectSettings.save()
 
 
+func set_export_type(key:int):
+	ProjectSettings.set_setting(OPTIONS.EXPORT_TYPE, key)
+	ProjectSettings.save()
+
+
 func get_api_key():
 	return ProjectSettings.get_setting(OPTIONS.API_KEY, "")
+
+
+func get_export_type():
+	return ProjectSettings.get_setting(OPTIONS.EXPORT_TYPE, 0)
 
 
 func get_output_path():
@@ -391,3 +422,12 @@ func _on_field_file_value_changed(property_name, value):
 
 func _on_button_input_copy_img_pressed():
 	file_input_image.set_raw_texture(canvas_subject_item.texture)
+
+
+func _on_option_export_type_selected(index):
+	set_export_type(index)
+
+
+func _on_button_start_generate_pressed():
+	if is_auth_ready:
+		tab_container.current_tab = 0

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://biqo2bcnxfcmg"]
 
 [ext_resource type="Script" path="res://addons/godot_piforge/addons/piforge_ai/piforge_panel.gd" id="1_3j6k1"]
-[ext_resource type="Texture2D" uid="uid://33x53x6c0e7g" path="res://addons/godot_piforge/addons/piforge_ai/spinner.svg" id="2_mu75f"]
+[ext_resource type="Texture2D" path="res://addons/godot_piforge/addons/piforge_ai/spinner.svg" id="2_mu75f"]
 [ext_resource type="Texture2D" uid="uid://dxnololcxu10s" path="res://addons/godot_piforge/addons/piforge_ai/piforge_icon.svg" id="3_dkor6"]
 [ext_resource type="PackedScene" uid="uid://b46wiif52wocb" path="res://addons/godot_piforge/addons/piforge_ai/field_file.tscn" id="4_m46pg"]
 [ext_resource type="Texture2D" uid="uid://do14k82q8tfvc" path="res://addons/godot_piforge/addons/piforge_ai/icon.svg" id="5_3aks0"]
@@ -275,7 +275,7 @@ text = "GENERATE"
 [node name="Credits" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Credits: 0"
+text = "7549.99999999998 Credits"
 
 [node name="Settings" type="VBoxContainer" parent="TabContainer"]
 visible = false
@@ -303,6 +303,7 @@ layout_mode = 2
 [node name="LineEdit" type="LineEdit" parent="TabContainer/Settings/HBoxContainer"]
 custom_minimum_size = Vector2(400, 2.08165e-12)
 layout_mode = 2
+text = "******"
 placeholder_text = "Enter API KEY"
 
 [node name="ButtonCheckKey" type="Button" parent="TabContainer/Settings/HBoxContainer"]
@@ -311,9 +312,11 @@ text = "Check API KEY"
 
 [node name="LabelStatus" type="Label" parent="TabContainer/Settings/HBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Your API KEY is ready"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Settings"]
+visible = false
 layout_mode = 2
 
 [node name="ButtonGetKey" type="Button" parent="TabContainer/Settings/HBoxContainer3"]
@@ -321,10 +324,9 @@ layout_mode = 2
 text = "GET API KEY"
 
 [node name="Credits" type="Label" parent="TabContainer/Settings"]
-visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Credits: 0"
+text = "7549.99999999998 Credits"
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="TabContainer/Settings"]
 layout_mode = 2
@@ -354,12 +356,35 @@ text = "res://"
 custom_minimum_size = Vector2(2.08165e-12, 20)
 layout_mode = 2
 
+[node name="Label4" type="Label" parent="TabContainer/Settings"]
+layout_mode = 2
+text = "Asset export type"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="TabContainer/Settings"]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="TabContainer/Settings/HBoxContainer5"]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "JPG"
+popup/item_0/id = 1
+popup/item_1/text = "PNG"
+popup/item_1/id = 0
+popup/item_2/text = "WEBM"
+popup/item_2/id = 2
+
+[node name="HSeparator4" type="HSeparator" parent="TabContainer/Settings"]
+custom_minimum_size = Vector2(2.08165e-12, 20)
+layout_mode = 2
+
 [node name="LinkButton" type="LinkButton" parent="TabContainer/Settings"]
 layout_mode = 2
 text = "https://piforge.ai"
 uri = "https://piforge.ai"
 
 [connection signal="tab_changed" from="TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="pressed" from="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer/FlowContainer/HFlowContainer/HistoryItem" to="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer/FlowContainer/HFlowContainer/HistoryItem" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer/FlowContainer/Button" to="." method="_on_button_load_more_history_pressed"]
 [connection signal="pressed" from="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/ActionButtons/Bottom/ButtonInputImg" to="." method="_on_button_input_copy_img_pressed"]
 [connection signal="gui_input" from="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/VBoxContainer/PiForge" to="." method="_on_pi_forge_gui_input"]
@@ -368,5 +393,6 @@ uri = "https://piforge.ai"
 [connection signal="text_changed" from="TabContainer/Settings/HBoxContainer/LineEdit" to="." method="_on_api_key_changed"]
 [connection signal="pressed" from="TabContainer/Settings/HBoxContainer/ButtonCheckKey" to="." method="_on_button_check_key_pressed"]
 [connection signal="pressed" from="TabContainer/Settings/HBoxContainer3/ButtonGetKey" to="." method="on_pressed_get_key"]
-[connection signal="pressed" from="TabContainer/Settings/HBoxContainer4/ButtonStartGenerate" to="." method="_on_tab_container_tab_changed" binds= [0]]
+[connection signal="pressed" from="TabContainer/Settings/HBoxContainer4/ButtonStartGenerate" to="." method="_on_button_start_generate_pressed"]
 [connection signal="text_changed" from="TabContainer/Settings/LineEdit" to="." method="_on_output_path_changed"]
+[connection signal="item_selected" from="TabContainer/Settings/HBoxContainer5/OptionButton" to="." method="_on_option_export_type_selected"]
