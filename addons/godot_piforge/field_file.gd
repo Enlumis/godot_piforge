@@ -108,6 +108,7 @@ func set_raw_texture(textu:Texture2D):
 	%TextureRect.visible = true
 	%TextureRect.texture = textu
 	%Field.text = current_value
+	%ClearButton.visible = !hide_reset
 	
 #endregion
 

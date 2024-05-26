@@ -18,9 +18,12 @@ func set_panel_ref(p):
 	panel = p
 
 
-func setData(item):
+func setData(item:Dictionary):
 	data = item
-	download_image(item["img_url"])
+	if data.has("data"):
+		var outdata = data["data"]
+		if outdata.has("img_url"):
+			download_image(outdata["img_url"])
 
 
 func _on_pressed():
@@ -38,7 +41,7 @@ func download_image(url):
 
 	var http_error = http_request.request(url)
 	if http_error != OK:
-		print("An error occurred in the HTTP request.")
+		print("[PiForge AI] An error occurred in the HTTP request.")
 		spinner.visible = false
 
 
@@ -46,7 +49,7 @@ func _http_request_completed(result, response_code, headers, body):
 	var image = Image.new()
 	var error = image.load_png_from_buffer(body)
 	if error != OK:
-		push_error("Couldn't load the image.")
+		push_error("[PiForge AI] Couldn't load the image.")
 		spinner.visible = false
 
 	var texture = ImageTexture.create_from_image(image)
