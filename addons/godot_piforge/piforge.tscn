@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://biqo2bcnxfcmg"]
+[gd_scene load_steps=10 format=3 uid="uid://biqo2bcnxfcmg"]
 
 [ext_resource type="Script" path="res://addons/godot_piforge/piforge_panel.gd" id="1_3j6k1"]
 [ext_resource type="Texture2D" uid="uid://33x53x6c0e7g" path="res://addons/godot_piforge/spinner.svg" id="2_mu75f"]
 [ext_resource type="Texture2D" uid="uid://dxnololcxu10s" path="res://addons/godot_piforge/piforge_icon.svg" id="3_dkor6"]
+[ext_resource type="Texture2D" uid="uid://bvafuxusqh4ra" path="res://addons/godot_piforge/pencil.svg" id="3_nwk51"]
 [ext_resource type="PackedScene" uid="uid://b46wiif52wocb" path="res://addons/godot_piforge/field_file.tscn" id="4_m46pg"]
+[ext_resource type="Texture2D" uid="uid://cpcfk65x6bgfi" path="res://addons/godot_piforge/eraser.svg" id="4_p1r5e"]
 [ext_resource type="Texture2D" uid="uid://do14k82q8tfvc" path="res://addons/godot_piforge/icon.svg" id="5_3aks0"]
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_p0wvl"]
@@ -126,7 +128,6 @@ size_flags_horizontal = 3
 [node name="ScrollContainer" type="GraphEdit" parent="TabContainer/Generate/HSplitContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-zoom = 2.0
 zoom_min = 0.5
 zoom_max = 4.0
 minimap_enabled = false
@@ -137,13 +138,12 @@ show_arrange_button = false
 
 [node name="GraphNode" type="GraphNode" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer"]
 layout_mode = 0
-offset_left = 90.0
-offset_top = 270.0
-offset_right = 602.0
-offset_bottom = 970.0
-scale = Vector2(2, 2)
+offset_left = 76.0
+offset_top = 72.0
+offset_right = 600.0
+offset_bottom = 557.0
 mouse_filter = 1
-position_offset = Vector2(45, 135)
+position_offset = Vector2(76, 72)
 resizable = true
 slot/0/left_enabled = false
 slot/0/left_type = 0
@@ -158,6 +158,61 @@ slot/0/draw_stylebox = true
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="ButtonDrawMask" type="Button" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Draw a mask"
+
+[node name="DrawMaskBarFull" type="VBoxContainer" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonDrawMaskDelete" type="Button" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/DrawMaskBarFull"]
+visible = false
+layout_mode = 2
+text = "Delete Mask"
+
+[node name="DrawMaskBar" type="HBoxContainer" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/DrawMaskBarFull"]
+visible = false
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/DrawMaskBarFull/DrawMaskBar"]
+layout_mode = 2
+text = "Mask Tools:"
+
+[node name="DrawMaskBar2" type="HBoxContainer" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/DrawMaskBarFull"]
+visible = false
+layout_mode = 2
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/DrawMaskBarFull/DrawMaskBar2"]
+custom_minimum_size = Vector2(100, 2.08165e-12)
+layout_mode = 2
+size_flags_vertical = 1
+min_value = 1.0
+value = 30.0
+
+[node name="CheckBoxPencil" type="CheckBox" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/DrawMaskBarFull/DrawMaskBar2"]
+custom_minimum_size = Vector2(90, 2.08165e-12)
+layout_mode = 2
+button_pressed = true
+icon = ExtResource("3_nwk51")
+
+[node name="CheckBoxEraser" type="CheckBox" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/DrawMaskBarFull/DrawMaskBar2"]
+custom_minimum_size = Vector2(90, 2.08165e-12)
+layout_mode = 2
+icon = ExtResource("4_p1r5e")
+
+[node name="ButtonInvert" type="Button" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/DrawMaskBarFull/DrawMaskBar2"]
+layout_mode = 2
+text = "Invert Mask"
+
+[node name="LabelDrawMask" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/DrawMaskBarFull"]
+visible = false
+layout_mode = 2
+text = "Draw mask on the image below"
+horizontal_alignment = 1
 
 [node name="Spinner" type="Control" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer"]
 visible = false
@@ -183,10 +238,23 @@ texture = ExtResource("2_mu75f")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect" type="TextureRect" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer"]
+[node name="MarginContainer" type="AspectRatioContainer" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("3_dkor6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRectMask" type="TextureRect" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/MarginContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_vertical = 3
 expand_mode = 1
 stretch_mode = 5
 
@@ -272,6 +340,12 @@ text = "Input Image:"
 [node name="Field_File" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/ScrollContainer/VBoxContainer" instance=ExtResource("4_m46pg")]
 layout_mode = 2
 
+[node name="HasMask" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.552941, 0, 1)
+text = "This image has a mask"
+
 [node name="LabelDenoise2" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Image Count:"
@@ -307,6 +381,7 @@ tick_count = 10
 ticks_on_borders = true
 
 [node name="GenerateStatus" type="Label" parent="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 2.08165e-12)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 autowrap_mode = 2
@@ -413,6 +488,9 @@ uri = "https://piforge.ai"
 
 [connection signal="tab_changed" from="TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="pressed" from="TabContainer/Generate/HSplitContainer/BoxContainer/VBoxContainer/ScrollContainer/FlowContainer/Button" to="." method="_on_button_load_more_history_pressed"]
+[connection signal="gui_input" from="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/MarginContainer/TextureRectMask" to="." method="_on_texture_rect_mask_gui_input"]
+[connection signal="mouse_entered" from="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/MarginContainer/TextureRectMask" to="." method="_on_texture_rect_mask_mouse_entered"]
+[connection signal="mouse_exited" from="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/MarginContainer/TextureRectMask" to="." method="_on_texture_rect_mask_mouse_exited"]
 [connection signal="pressed" from="TabContainer/Generate/HSplitContainer/HSplitContainer/ScrollContainer/GraphNode/VBoxContainer/ActionButtons/Bottom/ButtonInputImg" to="." method="_on_button_input_copy_img_pressed"]
 [connection signal="gui_input" from="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/ScrollContainer/VBoxContainer/PiForge" to="." method="_on_pi_forge_gui_input"]
 [connection signal="value_changed" from="TabContainer/Generate/HSplitContainer/HSplitContainer/BoxContainer2/ScrollContainer/VBoxContainer/Field_File" to="." method="_on_field_file_value_changed"]
