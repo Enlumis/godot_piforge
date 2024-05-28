@@ -29,7 +29,8 @@ func download_image(url):
 	
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	http_request.connect("request_completed", _http_request_completed)
+	http_request.connect("request_completed", func (result, response_code, headers, body):
+		_http_request_completed(body, url))
 
 	var http_error = http_request.request(url)
 	if http_error != OK:
@@ -37,10 +38,16 @@ func download_image(url):
 		spinner.visible = false
 
 
-func _http_request_completed(result, response_code, headers, body):
+func _http_request_completed(body, url:String):
 	var image = Image.new()
-	var error = image.load_png_from_buffer(body)
-	if error != OK:
+	var error = null
+	if url.contains(".png"):
+		error = image.load_png_from_buffer(body)
+	elif url.contains(".jpg"):
+		error = image.load_jpg_from_buffer(body)
+	elif url.contains(".webp"):
+		error = image.load_webp_from_buffer(body)
+	if error != OK or error == null:
 		push_error("[PiForge AI] Couldn't load the image.")
 		spinner.visible = false
 

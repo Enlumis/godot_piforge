@@ -24,7 +24,7 @@ var drawing: bool = false
 var history: Array[Dictionary] = [
 	{
 		"data": {
-			"img_url": "https://storage.googleapis.com/download/storage/v1/b/gotoflatstyle.appspot.com/o/w39wM2Yo7xQf8LELXQumGFJNjJl2%2FwZVfUUAlHWehgTzrP79e_2.png?generation=1716666602092817&alt=media",
+			"img_url": "https://raw.githubusercontent.com/Enlumis/godot_piforge/main/addons/godot_piforge/screenshots/demo1.jpg",
 			"prompt_settings": {
 				"cfg": 8,
 				"denoise": 0.54,
@@ -33,34 +33,7 @@ var history: Array[Dictionary] = [
 	},
 	{
 		"data": {
-			"img_url": "https://storage.googleapis.com/download/storage/v1/b/gotoflatstyle.appspot.com/o/w39wM2Yo7xQf8LELXQumGFJNjJl2%2FpBMQxDAI8xdfkThEOiCW_4.png?generation=1707424863797919&alt=media",
-			"prompt_settings": {
-				"cfg": 8,
-				"denoise": 0.54,
-			}
-		}
-	},
-	{
-		"data": {
-			"img_url": "https://storage.googleapis.com/download/storage/v1/b/gotoflatstyle.appspot.com/o/w39wM2Yo7xQf8LELXQumGFJNjJl2%2FM6JZJg7kQb7V4M5R3MjT_1.png?generation=1707424219488364&alt=media",
-			"prompt_settings": {
-				"cfg": 8,
-				"denoise": 0.54,
-			}
-		}
-	},
-	{
-		"data": {
-			"img_url": "https://storage.googleapis.com/download/storage/v1/b/gotoflatstyle.appspot.com/o/w39wM2Yo7xQf8LELXQumGFJNjJl2%2FMYw6pZdF6R0gP45N4SXw_2.png?generation=1706624077371134&alt=media",
-			"prompt_settings": {
-				"cfg": 8,
-				"denoise": 0.54,
-			}
-		}
-	},
-	{
-		"data": {
-			"img_url": "https://storage.googleapis.com/download/storage/v1/b/gotoflatstyle.appspot.com/o/w39wM2Yo7xQf8LELXQumGFJNjJl2%2F1ikad6UVgkb4GIKuAtsF_1.png?generation=1706286927564549&alt=media",
+			"img_url": "https://raw.githubusercontent.com/Enlumis/godot_piforge/main/addons/godot_piforge/screenshots/demo2.jpg",
 			"prompt_settings": {
 				"cfg": 8,
 				"denoise": 0.54,
@@ -284,29 +257,25 @@ func _on_button_load_more_history_pressed():
 	
 
 func _on_file_dialog_selected(path:String) -> void:
-	var my_resource: Image = canvas_subject_item.texture.get_image()
-	var only_filename = current_filename.split("?")[0]
-	var filename_no_ext = only_filename.replace(".png", "")
 	var error:Error
 	match export_type:
 		"jpg":
-			only_filename = only_filename.replace(".png", ".jpg")
-			error = my_resource.save_jpg(only_filename)
+			error = image_to_save.save_jpg(path)
 		"png":
-			error = my_resource.save_png(only_filename)
+			error = image_to_save.save_png(path)
 		"webp":
-			only_filename = only_filename.replace(".png", ".webp")
-			error = my_resource.save_webp(only_filename)
+			error = image_to_save.save_webp(path)
 		_:
-			error = my_resource.save_jpg(only_filename)
+			error = image_to_save.save_jpg(path)
 	if error == OK:
-		print("[PiForge AI] Ressouce Saved at %s" % only_filename)
+		print("[PiForge AI] Ressouce Saved at %s" % path)
 		EditorInterface.get_resource_filesystem().scan()
 	else:
 		print("[PiForge AI] Failed to save resouce error:%s" % error)
 
 
-
+var image_to_save:Image = null
+	
 func _on_save_current(id: int):
 	match (id):
 		0:
@@ -318,8 +287,10 @@ func _on_save_current(id: int):
 		_:
 			export_type = "jpg"
 	var only_filename = current_filename.split("?")[0]
-	var filename_no_ext = only_filename.replace(".png", "")
-	godot_file_dialog(_on_file_dialog_selected, "*.%s" % export_type, EditorFileDialog.FILE_MODE_SAVE_FILE, "Save "+ only_filename, filename_no_ext, true)
+	var filename_no_ext = only_filename.replace(".png", "").replace(".jpg", "").replace(".webp", "")
+	var filename_with_ext = "%s.%s" % [filename_no_ext, export_type]
+	image_to_save = canvas_subject_item.texture.get_image()
+	godot_file_dialog(_on_file_dialog_selected, "*.%s" % export_type, EditorFileDialog.FILE_MODE_SAVE_FILE, "Save "+ filename_with_ext, filename_with_ext, true)
 
 
 func on_pressed_get_key():
@@ -430,7 +401,7 @@ func _on_button_generate_pressed():
 		"cfg": cfg_slider.value,
 		"image_count": img_count,
 	}
-	if current_ai_product.has("has_mask"):
+	if current_ai_product.has("has_mask") and mask != null:
 		if canvas_subject_mask.visible:
 			var mask_data = get_base_64_mask_data(get_real_mask())
 			params["mask"] = "data:image/png;base64,%s" % mask_data
@@ -495,7 +466,8 @@ func download_image(url:String):
 
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	http_request.connect("request_completed", _http_request_completed)
+	http_request.connect("request_completed", func (result, response_code, headers, body):
+		_http_request_completed(body, url))
 
 	var http_error = http_request.request(url)
 	if http_error != OK:
@@ -504,10 +476,16 @@ func download_image(url:String):
 		canvas_subject_item.visible = true
 
 
-func _http_request_completed(result, response_code, headers, body):
+func _http_request_completed(body, url:String):
 	var image = Image.new()
-	var error = image.load_png_from_buffer(body)
-	if error != OK:
+	var error = null
+	if url.contains(".png"):
+		error = image.load_png_from_buffer(body)
+	elif url.contains(".jpg"):
+		error = image.load_jpg_from_buffer(body)
+	elif url.contains(".webp"):
+		error = image.load_webp_from_buffer(body)
+	if error != OK or error == null:
 		push_error("[PiForge AI] Couldn't load the image.")
 		canvas_spinner.visible = false
 		canvas_subject_item.visible = true
